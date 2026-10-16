@@ -1,6 +1,6 @@
 image:
   repository: ghcr.io/leurok/ds-lab4/payment-service
-  tag: latest
+  tag: v5
 
 service:
   port: 8050

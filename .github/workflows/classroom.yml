@@ -42,12 +42,12 @@ jobs:
       - name: Build images
         timeout-minutes: 10
         run: |
+          TAG=${GITHUB_SHA::7}
           for svc in payment-service cars-service rental-service gateway-service; do
             docker buildx build --platform linux/amd64 \
-              -t ghcr.io/leurok/ds-lab4/$svc:latest \
+              -t ${{ env.IMAGE_PREFIX }}/$svc:$TAG \
               --push ./$svc
           done
-
       - name: Setup kubectl
         uses: azure/setup-kubectl@v3
         with:
@@ -79,11 +79,13 @@ jobs:
 
       - name: Deploy services
         run: |
+          TAG=${GITHUB_SHA::7}
           for svc in payment-service cars-service rental-service gateway-service; do
             helm upgrade --install $svc ./charts/app \
               -f ./charts/app/values-${svc%-service}.yaml \
+              --set image.tag=$TAG \
               --namespace default \
-              --wait --timeout 5m
+              --wait --timeout 10m
           done
 
       - name: Install newman
