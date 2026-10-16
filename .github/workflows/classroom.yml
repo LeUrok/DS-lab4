@@ -57,6 +57,13 @@ jobs:
         uses: azure/setup-helm@v3
         with:
           version: 'latest'
+      
+      - name: Install cloudlogin
+        run: |
+          curl -LO https://github.com/cloud-ru-tech/cloudlogin/releases/latest/download/cloudlogin_Linux_amd64.tar.gz
+          tar -xzf cloudlogin_Linux_amd64.tar.gz
+          sudo mv cloudlogin /usr/local/bin/
+          cloudlogin help
 
       - name: Configure kubeconfig
         run: |
