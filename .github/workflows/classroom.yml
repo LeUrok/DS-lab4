@@ -44,7 +44,7 @@ jobs:
         run: |
           for svc in payment-service cars-service rental-service gateway-service; do
             docker buildx build --platform linux/amd64 \
-              -t ghcr.io/${{ github.repository_owner }}/ds-lab4/$svc:latest \
+              -t ghcr.io/leurok/ds-lab4/$svc:latest \
               --push ./$svc
           done
 
